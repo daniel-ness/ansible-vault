@@ -1,5 +1,8 @@
 # daniel-ness/ansible-vault
 
+[![Build Status](https://travis-ci.org/daniel-ness/ansible-vault.svg?branch=master)](https://travis-ci.org/daniel-ness/ansible-vault)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/100a16f06c0a41b78eab8d5cb1d9d69d)](https://www.codacy.com/manual/daniel-ness/ansible-vault?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=daniel-ness/ansible-vault&amp;utm_campaign=Badge_Grade)
+
 ## Overview
 I've no idea if anyone else will ever possibly require this, but I did.
 
@@ -34,6 +37,9 @@ echo $plainText . "\n";
 
 > itCanDecryptOnePointOneString
 ```
+
+## Todo
+- Encryption
 
 ## License
 MIT License
