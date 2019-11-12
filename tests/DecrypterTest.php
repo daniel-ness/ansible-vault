@@ -69,4 +69,14 @@ class DecrypterTest extends TestCase
         $decrypted = Decrypter::decryptString($encrypted, self::PASSWORD);
         $this->assertEquals(b'itCanDecryptOnePointOneString', $decrypted);
     }
+
+    /**
+     * @test
+     */
+    public function itCanDecryptOnePointOneStringWithTag()
+    {
+        $encrypted = file_get_contents(__DIR__ . '/files/OnePointOneStringNoTag.txt');
+        $decrypted = Decrypter::decryptString($encrypted, self::PASSWORD);
+        $this->assertEquals(b'itCanDecryptOnePointOneString', $decrypted);
+    }
 }
