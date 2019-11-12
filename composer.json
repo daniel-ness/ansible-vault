@@ -1,0 +1,29 @@
+{
+    "name": "daniel-ness/ansible-vault",
+    "type": "library",
+    "license": "MIT",
+    "description": "PHP port of ansible-vault encryption/decryption",
+    "authors": [
+        {
+            "name": "Daniel Ness",
+            "email": "daniel.r.ness@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "ext-dom": "20031129"
+    },
+    "autoload": {
+        "classmap": [
+            "src"
+        ],
+        "psr-4": {
+            "DanielNess\\Ansible\\Vault\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.4",
+        "phpro/grumphp": "^0.16.2",
+        "phpstan/phpstan": "^0.11.19"
+    }
+}
