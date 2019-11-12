@@ -39,7 +39,7 @@ echo $plainText . "\n";
 ```
 
 ## Todo
-- Encryption
+  - Encryption
 
 ## License
 MIT License
