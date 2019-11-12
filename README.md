@@ -30,7 +30,7 @@ $vaultText = '$ANSIBLE_VAULT;1.1;AES256
   39346438303334376534663130336466326162643266623630303233656430613330';
 
 $plainText = Decrypter::decryptString($vaultText, $password);
-echo $plaintText . "\n";
+echo $plainText . "\n";
 
 > itCanDecryptOnePointOneString
 ```
