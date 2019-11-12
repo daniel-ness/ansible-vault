@@ -67,6 +67,9 @@ class Envelope
 
             } else if ($this->headerLine) {
                 $vaultLines[] = $line;
+                
+            } else {
+                throw new InvalidPayloadException();
             }
         }
 
