@@ -58,19 +58,24 @@ class Envelope
 
             if ($i == 0 && strpos($line, '!vault') === 0) {
                 $this->tagPrefix = true;
+                continue;
+            }
 
-            } else if ($i <= 1 && strpos($line, self::HEADER) === 0) {
+            if ($i <= 1 && strpos($line, self::HEADER) === 0) {
                 list($header, $version, $alg) = explode(';', $line);
                 $this->headerLine = $line;
                 $this->alg = $alg;
                 $this->version = $version;
+                continue;
 
-            } else if ($this->headerLine) {
-                $vaultLines[] = $line;
-                
-            } else {
-                throw new InvalidPayloadException();
             }
+
+            if ($this->headerLine) {
+                $vaultLines[] = $line;
+                continue;
+            }
+
+            throw new InvalidPayloadException();
         }
 
         if (!$this->headerLine || count($vaultLines) < 1) {
