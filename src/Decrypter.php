@@ -8,14 +8,6 @@ use DanielNess\Ansible\Vault\Decrypter\Envelope;
 use DanielNess\Ansible\Vault\Decrypter\Exception\DecryptionException;
 use DanielNess\Ansible\Vault\Exception\AnsibleVaultException;
 
-function hexToStr($hex){
-    $string='';
-    for ($i=0; $i < strlen($hex)-1; $i+=2){
-        $string .= chr(hexdec($hex[$i].$hex[$i+1]));
-    }
-    return $string;
-}
-
 /**
  * Class Decrypter
  * @package DanielNess\Ansible\Vault
