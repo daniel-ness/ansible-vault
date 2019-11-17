@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DanielNess\Ansible\Vault;
 
+use DanielNess\Ansible\Vault\Contracts\EncryptionTrait;
 use DanielNess\Ansible\Vault\Decrypter\Envelope;
 use DanielNess\Ansible\Vault\Decrypter\Exception\DecryptionException;
 use DanielNess\Ansible\Vault\Exception\AnsibleVaultException;
@@ -15,6 +16,8 @@ use DanielNess\Ansible\Vault\Exception\AnsibleVaultException;
  */
 class Decrypter
 {
+    use EncryptionTrait;
+
     const AES_256_CTR = 'aes-256-ctr';
 
     /**
@@ -37,7 +40,9 @@ class Decrypter
         list($key1, $key2, $iv) = self::generateSha256Keys($password, $envelope->getSalt());
         $hmac = self::generateHMAC($envelope->getCipherText(), $key2);
 
-        if ($hmac !== hex2bin($envelope->getHmac())) {
+        if (bin2hex($hmac) !== $envelope->getHmac()) {
+            var_dump($envelope->getHmac());
+            var_dump(bin2hex($hmac));
             throw new DecryptionException("Invalid HMAC");
         }
 
@@ -53,6 +58,10 @@ class Decrypter
             throw new DecryptionException();
         }
 
+        // remove pkcs7 padding
+        $padding = ord($binaryText[strlen($binaryText) - 1]);
+        $binaryText = substr($binaryText, 0, ($padding * -1));
+
         // convert from binary data
         $plainText = '';
         foreach (unpack('c*', $binaryText) as $bin) {
@@ -64,40 +73,5 @@ class Decrypter
         }
 
         return (string) $plainText;
-    }
-
-    /**
-     * @param string $password
-     * @param string $salt
-     * @return array
-     */
-    public static function generateSha256Keys(string $password, string $salt): array
-    {
-        $keyLength = 32;
-        $ivLength = 16;
-
-        $derivedKey = hash_pbkdf2(
-            'sha256',
-            $password,
-            $salt,
-            10000,
-            2 * $keyLength + $ivLength,
-            true
-        );
-
-        $key1 = substr($derivedKey, 0, $keyLength);
-        $key2 = substr($derivedKey, $keyLength, $keyLength);
-        $iv = substr($derivedKey, ($keyLength*2), $ivLength);
-
-        return [
-            $key1,
-            $key2,
-            $iv,
-        ];
-    }
-
-    public static function generateHMAC(string $cipherText, string $key): string
-    {
-        return hash_hmac('sha256', $cipherText, $key, true);
     }
 }

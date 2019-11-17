@@ -62,21 +62,31 @@ class DecrypterTest extends TestCase
 
     /**
      * @test
+     * @dataProvider decryptionDataProvider
      */
-    public function itCanDecryptOnePointOneString()
+    public function itCanDecrypt(string $filename, string $expectedPlainText)
     {
-        $encrypted = file_get_contents(__DIR__ . '/files/OnePointOneString.txt');
+        $encrypted = file_get_contents($filename);
         $decrypted = Decrypter::decryptString($encrypted, self::PASSWORD);
-        $this->assertEquals(b'itCanDecryptOnePointOneString', $decrypted);
+        $this->assertEquals($expectedPlainText, $decrypted);
     }
 
-    /**
-     * @test
-     */
-    public function itCanDecryptOnePointOneStringWithTag()
+    public function decryptionDataProvider()
     {
-        $encrypted = file_get_contents(__DIR__ . '/files/OnePointOneStringNoTag.txt');
-        $decrypted = Decrypter::decryptString($encrypted, self::PASSWORD);
-        $this->assertEquals(b'itCanDecryptOnePointOneString', $decrypted);
+        return [
+            [
+                __DIR__ . '/files/OnePointOneStringNoTag.txt',
+                'itCanDecryptOnePointOneString',
+            ],
+            [
+                __DIR__ . '/files/OnePointOneString.txt',
+                'itCanDecryptOnePointOneString',
+            ],
+            [
+                __DIR__ . '/files/decrypted.txt',
+                'decrypted',
+            ]
+        ];
     }
+
 }

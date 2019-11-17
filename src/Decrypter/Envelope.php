@@ -84,6 +84,7 @@ class Envelope
 
         $vaultText = implode("", $vaultLines);
         $vaultText = hex2bin($vaultText);
+
         $vaultLines = explode("\n", $vaultText, 3);
 
         $this->salt = hex2bin($vaultLines[0]);

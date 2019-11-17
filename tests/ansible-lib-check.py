@@ -58,12 +58,28 @@ print(default_backend())
 print("Without padding")
 print(plaintext)
 
-
 print plaintext
 plaintext = aes._decrypt_cryptography(cipher_text, crypted_hmac, key1, key2, iv)
 print plaintext
 
+
+b_hmac, b_cipher_text = VaultAES256._encrypt_cryptography(plaintext, key1, key2, iv)
+print b_hmac
+print b_cipher_text
+
+cipher = C_Cipher(algorithms.AES(key1), modes.CTR(iv), default_backend())
+encryptor = cipher.encryptor()
+cipher_text = encryptor.update(plaintext)
+cipher_text += encryptor.finalize()
+print hexlify(cipher_text)
+
+
+
+
 #aes.
+padder = padding.PKCS7(algorithms.AES.block_size).padder()
+padded_text = padder.update(plaintext) + padder.finalize()
+print "'" + padded_text + "'"
 
 editor = VaultEditor(lib)
 #editor.decrypt_file(filename)
