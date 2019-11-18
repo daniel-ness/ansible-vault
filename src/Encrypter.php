@@ -37,7 +37,7 @@ class Encrypter
 
         list($key1, $key2, $iv) = (count($sha256Keys) === 3)
             ? $sha256Keys
-            : self::generateSha256Keys($salt, $password);
+            : self::generateSha256Keys($password, $salt);
 
         $binaryCipher = openssl_encrypt(
             $plainText,
@@ -51,10 +51,10 @@ class Encrypter
             throw new EncryptionException();
         }
 
-        $hmac = bin2hex(self::generateHMAC($binaryCipher, $key2));
+        $hmac = self::generateHMAC($binaryCipher, $key2);
 
         $header = implode(';', ['$ANSIBLE_VAULT', self::VERSION, self::CIPHER_NAME]);
-        $cipherText = bin2hex(implode("\n", [bin2hex($salt), $hmac, bin2hex($binaryCipher)]));
+        $cipherText = bin2hex(implode("\n", [bin2hex($salt), bin2hex($hmac), bin2hex($binaryCipher)]));
         $cipherText = chunk_split($cipherText, 80, "\n");
         $vaultText = implode("\n", [$header, $cipherText]);
 

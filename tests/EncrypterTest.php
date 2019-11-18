@@ -101,7 +101,6 @@ class EncrypterTest extends TestCase
     {
         $input = 'decrypt';
         $vaultText = Encrypter::encryptString($input, self::PASSWORD);
-        var_dump($vaultText);
         $plainText = Decrypter::decryptString($vaultText, self::PASSWORD);
         $this->assertEquals($input, $plainText);
     }

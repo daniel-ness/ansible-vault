@@ -38,11 +38,11 @@ class Decrypter
         }
 
         list($key1, $key2, $iv) = self::generateSha256Keys($password, $envelope->getSalt());
-        $hmac = self::generateHMAC($envelope->getCipherText(), $key2);
 
-        if (bin2hex($hmac) !== $envelope->getHmac()) {
-            var_dump($envelope->getHmac());
-            var_dump(bin2hex($hmac));
+        $hmac = self::generateHMAC($envelope->getCipherText(), $key2);
+        $hmac = bin2hex($hmac);
+
+        if (!hash_equals($hmac, $envelope->getHmac())) {
             throw new DecryptionException("Invalid HMAC");
         }
 

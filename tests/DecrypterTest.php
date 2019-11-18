@@ -85,6 +85,10 @@ class DecrypterTest extends TestCase
             [
                 __DIR__ . '/files/decrypted.txt',
                 'decrypted',
+            ],
+            [
+                __DIR__ . '/files/cn_enc.txt',
+                file_get_contents(__DIR__ . '/files/cn_plain.txt')
             ]
         ];
     }
