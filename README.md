@@ -15,7 +15,7 @@ https://github.com/ansible/ansible/blob/devel/lib/ansible/parsing/vault/__init__
 
 ## Installation
 ```$php
-composer require daniel-ness/vault-ansible 
+composer require daniel-ness/ansible-vault 
 ```
 
 ## Usage
